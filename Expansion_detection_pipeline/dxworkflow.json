@@ -1,0 +1,82 @@
+{
+  "name": "Expansion detection pipeline",
+  "title": "Expansion detection pipeline",
+  "stages": [
+    {
+      "id": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+      "executable": "${EH}",
+      "folder": "STRs/EH_RAW",
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x2"
+        }
+      }
+    },
+    {
+      "id": "stage-G5K2qJ84b9b9YbQjKXzQQ12b",
+      "executable": "${stranger}",
+      "folder": "STRs/Stranger",
+      "input": {
+        "repeats_file": {
+          "$dnanexus_link": {
+            "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+            "inputField": "variant_catalog"
+          }
+        },
+        "input_vcf": {
+          "$dnanexus_link": {
+            "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+            "outputField": "variants_vcf"
+          }
+        }
+      }
+    },
+    {
+      "id": "stage-G5K2qKj4b9bF2Bf1KXxjFbXG",
+      "executable": "${reviewer}",
+      "folder": "STRs/Reviewer",
+      "input": {
+        "reads": [
+          {
+            "$dnanexus_link": {
+              "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+              "outputField": "bamlet"
+            }
+          }
+        ],
+        "reads_index": [
+          {
+            "$dnanexus_link": {
+              "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+              "outputField": "bamlet_idx"
+            }
+          }
+        ],
+        "reference": {
+          "$dnanexus_link": {
+            "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+            "inputField": "reference"
+          }
+        },
+        "reference_index": {
+          "$dnanexus_link": {
+            "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+            "inputField": "fasta_index"
+          }
+        },
+        "vcf": {
+          "$dnanexus_link": {
+            "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+            "outputField": "variants_vcf"
+          }
+        },
+        "catalog": {
+          "$dnanexus_link": {
+            "stage": "stage-G5K2qFQ4b9b59f2J7kFpb9qZ",
+            "inputField": "variant_catalog"
+          }
+        }
+      }
+    }
+  ]
+}

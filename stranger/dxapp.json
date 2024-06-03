@@ -1,0 +1,72 @@
+{
+  "name": "stranger",
+  "title": "Stranger",
+  "summary": "Annotates output files from ExpansionHunter with the pathologic implications of the repeat sizes",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "input_vcf",
+      "label": "Input VCF",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.vcf", "*.vcf.gz"],
+      "optional": false
+    },
+    {
+      "name": "repeats_file",
+      "label": "File with repeat definitions",
+      "help": "File with repeat definitions. Default file GRCh38 from stranger.",
+      "class": "file",
+      "patterns": ["*"],
+      "optional": false
+    },
+    {
+      "name": "table_fields",
+      "label": "Table fields",
+      "help": "Choose fields from vcf to include in a table.",
+      "class": "string",
+      "optional": true,
+      "default": "CHROM POS ALT FILTER VARID STR_NORMAL_MAX STR_PATHOLOGIC_MIN InheritanceMode DisplayRU SourceId Disease STR_STATUS GT SO REPCN REPCI ADSP ADFL ADIR"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "output_vcf",
+      "label": "Annotated VCF",
+      "help": "",
+      "class": "file",
+      "patterns": ["*"]
+    },
+    {
+      "name": "output_vcf_as_table",
+      "label": "Annotated VCF as table",
+      "help": "",
+      "class": "file",
+      "patterns": ["*"]
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "file": "src/code.sh"
+  },
+  "regionalOptions": {
+    "aws:eu-central-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x2"
+        }
+      }
+    }
+  },
+  "categories": [],
+  "access": {},
+  "ignoreReuse": false
+}

@@ -1,0 +1,135 @@
+{
+  "name": "expansion_hunter",
+  "title": "Expansion Hunter",
+  "summary": "Expansion Hunter tool (version 4.0.2) for estimating repeat sizes.",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "reads",
+      "label": "Input BAM file",
+      "help": "BAM file with aligned reads.",
+      "class": "file",
+      "patterns": ["*.bam"],
+      "optional": false
+    },
+    {
+      "name": "BAM_file_index",
+      "label": "BAM file index",
+      "help": "BAM index file names must match BAM files (ex: file1.bam and file1.bam.bai).",
+      "class": "file",
+      "patterns": ["*.bai"],
+      "optional": false
+    },
+    {
+      "name": "reference",
+      "label": "Input FASTA file",
+      "help": "FASTA file with reference genome.",
+      "class": "file",
+      "patterns": ["*.fa", "*.fa.gz"],
+      "optional": false
+    },
+    {
+      "name": "fasta_index",
+      "label": "Input FASTA index",
+      "help": "FASTA index file",
+      "class": "file",
+      "patterns": ["*.fai"],
+      "optional": false
+    },
+    {
+      "name": "variant_catalog",
+      "label": "JSON file specifying variants to genotype.",
+      "help": "JSON file specifying variants to genotype. Should be specified as in https://github.com/Illumina/ExpansionHunter/tree/master/variant_catalog/hg38.",
+      "class": "file",
+      "patterns": ["*.json"],
+      "optional": false
+    },
+    {
+      "name": "sex",
+      "label": "Sex",
+      "help": "Specifies sex of the sample; can be either male or female (default). This parameter only affects repeats on sex chromosomes.",
+      "class": "string",
+      "optional": true,
+      "default": "female",
+      "choices": [
+        "female",
+        "male"
+      ],
+      "group": "Expansion Hunter Advanced Settings"
+    },
+    {
+      "name": "region_extension_length",
+      "label": "Region extension length",
+      "help": "Specifies how far from on/off-target regions to search for informative reads. Set to 1000 by default.",
+      "class": "int",
+      "optional": true,
+      "default": 1000,
+      "group": "Expansion Hunter Advanced Settings"
+    },
+    {
+      "name": "json",
+      "label": "Output JSON",
+      "help": "Specifies if JSON file output should be uploaded.",
+      "class": "boolean",
+      "optional": true,
+      "default": false,
+      "group": "Expansion Hunter Advanced Settings"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "variants_vcf",
+      "label": "Variants",
+      "help": "The output variants created by ExpansionHunter",
+      "class": "file",
+      "patterns": ["*.vcf"]
+    },
+    {
+      "name": "bamlet",
+      "label": "BAMlet file",
+      "help": "The output BAMlet file created by ExpansionHunter, sorted with samtools",
+      "class": "file",
+      "patterns": ["*.bam"]
+    },
+    {
+      "name": "bamlet_idx",
+      "label": "BAMlet index file",
+      "help": "The sorted output BAMlet index file",
+      "class": "file",
+      "patterns": ["*.bai"]
+    },
+    {
+      "name": "json_file",
+      "label": "JSON file",
+      "help": "The output variants in JSON format created by ExpansionHunter.",
+      "class": "file",
+      "patterns": ["*.json"],
+      "optional": true
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 24
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "file": "src/code.sh"
+  },
+  "regionalOptions": {
+    "aws:eu-central-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x2"
+        }
+      }
+    }
+  },
+  "details": {},
+  "categories": [],
+  "access": {},
+  "ignoreReuse": false
+}
