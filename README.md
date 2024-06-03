@@ -1,6 +1,6 @@
 # Repeat Expansion Detection Workflow for DNAnexus
 
-This repository contains tools and a workflow for detecting short tandem repeat (STR) expansions data using DNAnexus. The workflow has been tested using exome sequencing (WES) data. The workflow integrates the following tools:
+This repository contains tools and a workflow for detecting short tandem repeat (STR) expansions data using DNAnexus. The workflow has been tested using exome sequencing (ES) data. The workflow integrates the following tools:
 
 - **ExpansionHunter**
 - **Stranger**
@@ -14,13 +14,13 @@ Additionally, a TSV viewer tool is included to assist in viewing and sorting wor
 3. [Setup](#setup)
     - [Running on DNAnexus](#running-on-dnanexus)
     - [Running Locally](#running-locally)
-4. [TSV Viewer](#tsv-viewer)
+4. [TSV file Viewer](#tsv-viewer)
 5. [Variant Catalog](#variant-catalog)
 6. [Additional information](#additional-info)
 
 ## Introduction
 
-This repository provides a workflow to detect repeat expansions (RE) in WES data. It uses several tools to analyze sequencing data and can be executed on the DNAnexus platform. The workflow pulls necessary Docker images, creates applet objects, and assembles them into a workflow object on DNAnexus.
+This repository provides a workflow to detect repeat expansions (RE) in ES data. It uses several tools to analyze sequencing data and can be executed on the DNAnexus platform. The workflow pulls necessary Docker images, creates applet objects, and assembles them into a workflow object on DNAnexus.
 
 ## Prerequisites
 
@@ -34,8 +34,8 @@ Before using this workflow, ensure you have the following:
 Clone this repository and navigate to the directory:
 
 ```sh
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/li1ba/expansion_pipeline.git
+cd expansion_pipeline
 ```
 
 ### Building on DNAnexus
@@ -62,16 +62,26 @@ To use the workflow locally as a bash script, run:
 bash repeat_expansion_detection.sh -b <bamname> -f <fastaname> -v <varcat> -s <sex>
 ```
 Replace `<bamname>`, `<fastaname>`, `<varcat>`, and `<sex>` with your specific file names and parameters.
+
 -b: BAM file name (BAM index .bai should also be in the same directory as FASTA file)
+
 -f: FASTA file name
+
 -v: Variant catalog file
+
 -s: Sample sex (e.g., male, female)
+
 
 Output will be created in the same directory as the script. REViewer output will be created in a directory reviewer_output.
 
 ## TSV Viewer
 
-Included in the repository is the `TSV_viewer` script for handling TSV file output in DNAnexus platform. This script allows for searching and sorting through detected STR loci in the output files.
+Included in the repository is the `TSV file viewer` script for handling TSV file output in DNAnexus platform. This script allows for searching and sorting through detected STR loci in the output files.
+
+To use `TSV file viewer` in DNAnexus, upload it to your project:
+```sh
+dx upload --type FileViewer --details='{"patterns":["*.tsv"]}' "TSV file viewer"
+```
 
 ## Variant Catalog
 
