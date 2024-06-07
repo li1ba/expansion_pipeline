@@ -1,12 +1,12 @@
 # Repeat Expansion Detection Workflow for DNAnexus
 
-This repository contains tools and a workflow for detecting short tandem repeat (STR) expansions data using DNAnexus. The workflow has been tested using exome sequencing (ES) data. The workflow integrates the following tools:
+This repository contains tools and a workflow for detecting short tandem repeat (STR) expansions using DNAnexus. The workflow has been tested using exome sequencing (ES) data. The workflow integrates the following tools:
 
 - **ExpansionHunter**
 - **Stranger**
 - **Reviewer**
 
-Additionally, a TSV viewer tool is included to assist in viewing and sorting workflow output files.
+Additionally, a TSV viewer tool is included to assist in viewing and sorting workflow output.
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -85,7 +85,7 @@ dx upload --type FileViewer --details='{"patterns":["*.tsv"]}' "TSV file viewer"
 
 ## Variant Catalog
 
-A variant catalog in .json format is provided for human reference hg38 that covers REs (Repeat Expansions) captured in ES dataset. 
+A variant catalog in .json format is provided for human reference hg38 that covers REs captured in ES dataset. 
 
 ## Additional Information
 
